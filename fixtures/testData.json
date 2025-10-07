@@ -1,0 +1,26 @@
+{
+    "dev": {
+        "username": "dev_user",
+        "password": "dev_pass",
+        "baseUrl": "https://gq1.road.com/application/signon/secured/login.html"
+    },
+    "staging": {
+        "username": "staging_user",
+        "password": "staging_pass",
+        "baseUrl": "https://eu-staging.road.com/application/signon/secured/login.html"
+    },
+    "prod": {
+        "username": "prod_user",
+        "password": "prod_pass",
+        "baseUrl": "https://eugm.road.com/application/signon/secured/login.html"
+    },
+    "testData": {
+        "searchTerms": ["JavaScript", "TypeScript", "Playwright"],
+        "userRoles": ["admin", "user", "guest"],
+        "validationMessages": {
+            "required": "This field is required",
+            "invalidEmail": "Please enter a valid email address",
+            "invalidPassword": "Password must be at least 8 characters long"
+        }
+    }
+}
