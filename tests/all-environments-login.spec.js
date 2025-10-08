@@ -54,16 +54,42 @@ test.describe('Multi-Environment Authentication Tests', () => {
 
       // Verify successful login
       await test.step(`Verify successful login to ${env.name}`, async () => {
-        // Wait for welcome element with username - using first() to be more specific
-        // This avoids the strict mode violation when multiple elements match
-        await expect(
-          page.getByText(`Welcome ${env.credentials.username}`).first()
-        ).toBeVisible({ timeout: 30000 });
-        
-        // Take a screenshot after successful login
+        console.log(`[${env.name}] Attempting to verify successful login...`);
+
+        // Take a screenshot before verification
         await page.screenshot({
-          path: `./screenshots/${env.name}-logged-in-${Date.now()}.png`,
+          path: `./screenshots/${env.name}-before-welcome-check-${Date.now()}.png`,
+          fullPage: true
+        });
+
+        // Log the page URL
+        console.log(`[${env.name}] Current URL: ${page.url()}`);
+        
+        // Wait for page load
+        await page.waitForLoadState('networkidle');
+        
+        // First verify URL pattern
+        expect(page.url()).toMatch(/eu_index\.html/);
+        console.log(`[${env.name}] URL verification successful`);
+        
+        // Then verify page title
+        await expect(page).toHaveTitle('Trimble GeoManager');
+        console.log(`[${env.name}] Title verification successful`);
+        
+        // Finally verify logout button is visible (this confirms we're logged in)
+        await expect(page.getByText('Logout')).toBeVisible({ timeout: 30000 });
+        console.log(`[${env.name}] Logout button verification successful`);
+        
+        // Take successful verification screenshot
+        await page.screenshot({
+          path: `./screenshots/${env.name}-verification-complete-${Date.now()}.png`,
           fullPage: false
+        });
+        
+        // Take a screenshot after verification
+        await page.screenshot({
+          path: `./screenshots/${env.name}-after-welcome-check-${Date.now()}.png`,
+          fullPage: true
         });
       });
 

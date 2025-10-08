@@ -1,4 +1,4 @@
-const envConfig = {
+export const envConfig = {
     GQ1: {
         tokenUrl: process.env.GQ1_TOKEN_URL || "https://gq1.road.com/wsapi/v3/tokens",
         employeeUrl: process.env.GQ1_EMPLOYEE_URL || "https://gq1.road.com/wsapi/v5/employees",
@@ -24,5 +24,3 @@ const envConfig = {
         }
     }
 };
-
-module.exports = { envConfig };

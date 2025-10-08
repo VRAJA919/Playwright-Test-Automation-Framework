@@ -1,4 +1,3 @@
-import { APIRequestContext } from '@playwright/test';
 import { Helpers } from '../utils/helpers';
 import { DataGenerator } from '../utils/dataGenerator';
 import { envConfig } from '../config/environment';
@@ -9,7 +8,7 @@ import { envConfig } from '../config/environment';
 export class EmployeeAPI {
     /**
      * Create employee API client
-     * @param {APIRequestContext} request - Playwright API request context
+     * @param {Object} request - Playwright API request context from the test fixture
      * @param {string} environment - Environment to use (GQ1, STAGING, PROD)
      */
     constructor(request, environment = Helpers.getCurrentEnv()) {
