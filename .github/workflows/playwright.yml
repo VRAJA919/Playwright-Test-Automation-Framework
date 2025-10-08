@@ -19,6 +19,9 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       env:
+        # Enable ES Modules
+        NODE_OPTIONS: --experimental-vm-modules
+        
         # GQ1 Environment
         GQ1_TOKEN_URL: ${{ secrets.GQ1_TOKEN_URL }}
         GQ1_EMPLOYEE_URL: ${{ secrets.GQ1_EMPLOYEE_URL }}
@@ -36,7 +39,7 @@ jobs:
         PROD_EMPLOYEE_URL: ${{ secrets.PROD_EMPLOYEE_URL }}
         PROD_USERNAME: ${{ secrets.PROD_USERNAME }}
         PROD_PASSWORD: ${{ secrets.PROD_PASSWORD }}
-      run: npx playwright test
+      run: npm run test
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
