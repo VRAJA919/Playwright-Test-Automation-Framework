@@ -18,6 +18,24 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      env:
+        # GQ1 Environment
+        GQ1_TOKEN_URL: ${{ secrets.GQ1_TOKEN_URL }}
+        GQ1_EMPLOYEE_URL: ${{ secrets.GQ1_EMPLOYEE_URL }}
+        GQ1_USERNAME: ${{ secrets.GQ1_USERNAME }}
+        GQ1_PASSWORD: ${{ secrets.GQ1_PASSWORD }}
+        
+        # Staging Environment
+        STAGING_TOKEN_URL: ${{ secrets.STAGING_TOKEN_URL }}
+        STAGING_EMPLOYEE_URL: ${{ secrets.STAGING_EMPLOYEE_URL }}
+        STAGING_USERNAME: ${{ secrets.STAGING_USERNAME }}
+        STAGING_PASSWORD: ${{ secrets.STAGING_PASSWORD }}
+        
+        # Production Environment
+        PROD_TOKEN_URL: ${{ secrets.PROD_TOKEN_URL }}
+        PROD_EMPLOYEE_URL: ${{ secrets.PROD_EMPLOYEE_URL }}
+        PROD_USERNAME: ${{ secrets.PROD_USERNAME }}
+        PROD_PASSWORD: ${{ secrets.PROD_PASSWORD }}
       run: npx playwright test
     - name: Upload test results
       if: always()

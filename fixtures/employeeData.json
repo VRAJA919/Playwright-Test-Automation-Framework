@@ -1,0 +1,49 @@
+{
+  "employees": [
+    {
+      "name": "DOE, JOHN",
+      "surname": "TESTUSER",
+      "givenNames": "JOHN",
+      "descr": "Driver",
+      "empId": "EMP123456",
+      "contacts": {
+        "phones": [
+          { "type": "business", "value": "5551234567" },
+          { "type": "mobile", "value": "5559876543" }
+        ],
+        "emails": [
+          { "type": "personal", "value": "john.doe@example.com" }
+        ],
+        "homeAdrs": {
+          "adrsLine": "123 Test Street",
+          "city": "Testville",
+          "state": "CA",
+          "postalCode": "12345",
+          "countryCode": "US"
+        }
+      }
+    },
+    {
+      "name": "SMITH, JANE",
+      "surname": "TESTER",
+      "givenNames": "JANE",
+      "descr": "Manager",
+      "empId": "EMP654321",
+      "contacts": {
+        "phones": [
+          { "type": "business", "value": "5557654321" }
+        ],
+        "emails": [
+          { "type": "personal", "value": "jane.smith@example.com" }
+        ],
+        "homeAdrs": {
+          "adrsLine": "456 Sample Drive",
+          "city": "Exampleville",
+          "state": "NY",
+          "postalCode": "54321",
+          "countryCode": "US"
+        }
+      }
+    }
+  ]
+}

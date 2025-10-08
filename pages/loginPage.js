@@ -7,6 +7,7 @@ export class LoginPage extends BasePage {
         this.passwordInput = 'role=textbox[name="Password"]';
         this.loginButton = 'role=button[name="SIGN IN >"]';
         this.logoutLink = 'text=Logout';
+        this.errorMessage = '.error-message, .alert, [role=alert]'; // Common error message selectors
     }
 
     /**
