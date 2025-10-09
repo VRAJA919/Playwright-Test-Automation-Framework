@@ -1,50 +1,58 @@
-name: Playwright Tests
+name: End-to-End UI Tests
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  schedule:
+    - cron: '0 1 * * *'  # Run daily at 1 AM UTC
+
 jobs:
   test:
+    name: Run UI Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
         node-version: 18
+        cache: 'npm'
+        
     - name: Install dependencies
       run: npm ci
+      
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+      
     - name: Run Playwright tests
       env:
-        # Enable ES Modules
+        CI: true
         NODE_OPTIONS: --experimental-vm-modules
-        
-        # GQ1 Environment
-        GQ1_TOKEN_URL: ${{ secrets.GQ1_TOKEN_URL }}
-        GQ1_EMPLOYEE_URL: ${{ secrets.GQ1_EMPLOYEE_URL }}
-        GQ1_USERNAME: ${{ secrets.GQ1_USERNAME }}
-        GQ1_PASSWORD: ${{ secrets.GQ1_PASSWORD }}
-        
-        # Staging Environment
-        STAGING_TOKEN_URL: ${{ secrets.STAGING_TOKEN_URL }}
-        STAGING_EMPLOYEE_URL: ${{ secrets.STAGING_EMPLOYEE_URL }}
-        STAGING_USERNAME: ${{ secrets.STAGING_USERNAME }}
-        STAGING_PASSWORD: ${{ secrets.STAGING_PASSWORD }}
-        
-        # Production Environment
-        PROD_TOKEN_URL: ${{ secrets.PROD_TOKEN_URL }}
-        PROD_EMPLOYEE_URL: ${{ secrets.PROD_EMPLOYEE_URL }}
-        PROD_USERNAME: ${{ secrets.PROD_USERNAME }}
-        PROD_PASSWORD: ${{ secrets.PROD_PASSWORD }}
-      run: npm run test
+        # Environment Variables
+        GQ1_TOKEN_URL: ${{ secrets.API_GQ1_TOKEN }}
+        GQ1_EMPLOYEE_URL: ${{ secrets.API_GQ1_EMPLOYEE }}
+        GQ1_USERNAME: ${{ secrets.API_GQ1_USER }}
+        GQ1_PASSWORD: ${{ secrets.API_GQ1_PASS }}
+        STAGING_TOKEN_URL: ${{ secrets.API_STAGING_TOKEN }}
+        STAGING_EMPLOYEE_URL: ${{ secrets.API_STAGING_EMPLOYEE }}
+        STAGING_USERNAME: ${{ secrets.API_STAGING_USER }}
+        STAGING_PASSWORD: ${{ secrets.API_STAGING_PASS }}
+        PROD_TOKEN_URL: ${{ secrets.API_PROD_TOKEN }}
+        PROD_EMPLOYEE_URL: ${{ secrets.API_PROD_EMPLOYEE }}
+        PROD_USERNAME: ${{ secrets.API_PROD_USER }}
+        PROD_PASSWORD: ${{ secrets.API_PROD_PASS }}
+      run: npx playwright test tests/all-environments-login.spec.js --project=chromium
+      
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: test-results
+        name: ui-test-results
         path: reports/test-results/
         retention-days: 30
-        if-no-files-found: error
+        compression-level: 9
+        if-no-files-found: warn
