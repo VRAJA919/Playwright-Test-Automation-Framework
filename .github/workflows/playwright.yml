@@ -1,4 +1,4 @@
-name: End-to-End UI Tests
+name: All Automated Tests
 on:
   push:
     branches: [ main, master ]
@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Run UI Tests
+    name: Run All Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     
@@ -45,7 +45,10 @@ jobs:
         PROD_EMPLOYEE_URL: ${{ secrets.API_PROD_EMPLOYEE }}
         PROD_USERNAME: ${{ secrets.API_PROD_USER }}
         PROD_PASSWORD: ${{ secrets.API_PROD_PASS }}
-      run: npx playwright test tests/all-environments-login.spec.js --project=chromium
+      run: |
+        npx playwright test tests/all-environments-login.spec.js --project=chromium
+        npx playwright test tests/poiGeofences.pom.test.js --project=chromium
+        npx playwright test tests/employee.pom.test.js --project=chromium
       
     - name: Upload test results
       if: always()
